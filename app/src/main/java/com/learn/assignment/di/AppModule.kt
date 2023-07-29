@@ -4,6 +4,7 @@ import android.content.Context
 import com.learn.assignment.data.local.pref.PrefManager
 import com.learn.assignment.data.remote.APICallMethods
 import com.learn.assignment.data.remote.APIHandler
+import com.learn.assignment.ui.imageList.ImagesListViewModel
 import com.learn.assignment.ui.main.MainActivityViewModel
 import com.learn.assignment.utils.Constants
 import dagger.Module
@@ -32,7 +33,13 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun getMainActivityViewNodel( prefManager: PrefManager): MainActivityViewModel{
+    fun getMainActivityViewModel( prefManager: PrefManager): MainActivityViewModel{
         return MainActivityViewModel(prefManager)
+    }
+
+    @Provides
+    @Singleton
+    fun getImagesListViewModel( prefManager: PrefManager): ImagesListViewModel {
+        return ImagesListViewModel(prefManager)
     }
 }
