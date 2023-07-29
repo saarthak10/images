@@ -19,13 +19,6 @@ class MainActivity : AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.activity_main)
-//        (this as MainActivity).executeNavigation(
-//        FragmentNavigationBuilder(QuestionListFragment())
-//            .container(dashboardContainer())
-//            .isAddFragment(true)
-//            .isBackStack(true)
-//            .bundle(bundle)
-//            .build()
-//        )
+
     }
 }
