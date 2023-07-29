@@ -4,6 +4,7 @@ import android.content.Context
 import com.learn.assignment.data.local.pref.PrefManager
 import com.learn.assignment.data.remote.APICallMethods
 import com.learn.assignment.data.remote.APIHandler
+import com.learn.assignment.ui.imageviews.ImageViewsViewModel
 import com.learn.assignment.ui.imageList.ImagesListViewModel
 import com.learn.assignment.ui.main.MainActivityViewModel
 import com.learn.assignment.utils.Constants
@@ -39,6 +40,9 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun getImageViewsViewModel( prefManager: PrefManager,apiCallMethods: APICallMethods): ImageViewsViewModel{
+        return ImageViewsViewModel(prefManager,apiCallMethods)
+        
     fun getImagesListViewModel( prefManager: PrefManager): ImagesListViewModel {
         return ImagesListViewModel(prefManager)
     }
