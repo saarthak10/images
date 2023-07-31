@@ -40,9 +40,9 @@ object AppModule {
 
     @Provides
     @Singleton
-    fun getImageViewsViewModel( prefManager: PrefManager,apiCallMethods: APICallMethods): ImageViewsViewModel{
-        return ImageViewsViewModel(prefManager,apiCallMethods)
-        
+    fun getImageViewsViewModel( prefManager: PrefManager,apiCallMethods: APICallMethods): ImageViewsViewModel {
+        return ImageViewsViewModel(prefManager, apiCallMethods)
+    }
     fun getImagesListViewModel( prefManager: PrefManager): ImagesListViewModel {
         return ImagesListViewModel(prefManager)
     }
