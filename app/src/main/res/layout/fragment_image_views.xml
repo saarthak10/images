@@ -24,6 +24,7 @@
         android:layout_height="match_parent"
         android:orientation="horizontal"
         android:id="@+id/rcv_image_views"
+        android:background="@color/black"
         tools:listitem="@layout/row_item_image_view"
         android:text="@string/hello_blank_fragment" />
 

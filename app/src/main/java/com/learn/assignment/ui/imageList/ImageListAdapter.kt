@@ -1,8 +1,7 @@
-package com.learn.assignment.ui.imageviews
+package com.learn.assignment.ui.imageList
 
 import android.view.LayoutInflater
 import android.view.ViewGroup
-import android.widget.AdapterView
 import androidx.databinding.DataBindingUtil
 import androidx.databinding.ViewDataBinding
 import androidx.recyclerview.widget.RecyclerView
@@ -10,12 +9,15 @@ import com.learn.assignment.BR
 import com.learn.assignment.R
 import com.learn.assignment.base.BaseViewHolder
 import com.learn.assignment.data.model.ImagesListResponse
-import com.learn.assignment.databinding.RowItemImageViewBinding
+import com.learn.assignment.databinding.RowItemImagesBinding
+import com.learn.assignment.utils.OnItemClickListener
 import com.squareup.picasso.Picasso
 
-class ImageViewsAdapter(val mViewModel: ImageViewsViewModel): RecyclerView.Adapter<BaseViewHolder<ImagesListResponse.Hit>>() {
+class ImageListAdapter(val mViewModel: ImagesListViewModel, private val itemClickListener:
+OnItemClickListener
+): RecyclerView.Adapter<BaseViewHolder<ImagesListResponse.Hit>>() {
     private var isLoaderVisible = false
-    private val mDataList = mutableListOf<ImagesListResponse.Hit>()
+    private val mDataList = mutableListOf<ImagesListResponse.Hit?>()
 
 
     override fun onCreateViewHolder(
@@ -25,11 +27,11 @@ class ImageViewsAdapter(val mViewModel: ImageViewsViewModel): RecyclerView.Adapt
         val layoutInflater = LayoutInflater.from(parent.context)
         val binding: ViewDataBinding = DataBindingUtil.inflate(
             layoutInflater,
-            R.layout.row_item_image_view,
+            R.layout.row_item_images,
             parent,
             false
         )
-        return UserListViewHolder(binding as RowItemImageViewBinding)
+        return UserListViewHolder(binding as RowItemImagesBinding)
 
     }
 
@@ -38,14 +40,14 @@ class ImageViewsAdapter(val mViewModel: ImageViewsViewModel): RecyclerView.Adapt
 
         if (holder is UserListViewHolder) {
             val data = mDataList[position]
-            holder.bindData(data)
+            holder.bindData(data!!)
         }
 
 
     }
 
 
-    fun updateList(list: List<ImagesListResponse.Hit>) {
+    fun updateList(list: List<ImagesListResponse.Hit?>) {
         mDataList.clear()
         mDataList.addAll(list)
         notifyDataSetChanged()
@@ -53,7 +55,7 @@ class ImageViewsAdapter(val mViewModel: ImageViewsViewModel): RecyclerView.Adapt
 
 
     private fun getItem(position: Int): ImagesListResponse.Hit {
-        return mDataList[position]
+        return mDataList[position]!!
     }
 
     fun addLoading() {
@@ -62,21 +64,40 @@ class ImageViewsAdapter(val mViewModel: ImageViewsViewModel): RecyclerView.Adapt
         notifyItemInserted(mDataList.size - 1)
 
     }
-
-
+    fun removeLoading() {
+        isLoaderVisible = false
+        val position: Int = mDataList.size - 1
+        val item: ImagesListResponse.Hit? = getItem(position)
+        if (item != null) {
+            mDataList.removeAt(position)
+            notifyItemRemoved(position)
+        }
+    }
+    fun clearList() {
+        mDataList.clear()
+        notifyDataSetChanged()
+    }
 
     override fun getItemCount(): Int {
         return mDataList.size
     }
-    inner class UserListViewHolder(val binding: RowItemImageViewBinding): BaseViewHolder<ImagesListResponse.Hit>(binding.root){
+    inner class UserListViewHolder(val binding: RowItemImagesBinding): BaseViewHolder<ImagesListResponse.Hit>(binding.root){
         fun bindData(itemData:ImagesListResponse.Hit) {
             binding.setVariable(BR.viewModel, mViewModel)
-            Picasso.get().load(itemData.webformatURL).into(binding.ivImage)
+            Picasso.get().load(itemData.webformatURL).placeholder(R.drawable.loader).into(binding
+                .ivImage)
+        binding.clImage.setOnClickListener {
+            // Get the position of the clicked item
+            val position = adapterPosition
 
+            // Invoke the onItemClick method of the click listener interface
+            itemClickListener.onItemClick(position,mDataList[position]!!)
+
+
+        }
 
             binding.executePendingBindings()
         }
-
 
 
 

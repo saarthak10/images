@@ -4,6 +4,8 @@ import android.content.Context
 import com.learn.assignment.data.local.pref.PrefManager
 import com.learn.assignment.data.remote.APICallMethods
 import com.learn.assignment.data.remote.APIHandler
+import com.learn.assignment.repository.images.ImagesRepo
+import com.learn.assignment.repository.images.ImagesRepoImpl
 import com.learn.assignment.ui.imageviews.ImageViewsViewModel
 import com.learn.assignment.ui.imageList.ImagesListViewModel
 import com.learn.assignment.ui.main.MainActivityViewModel
@@ -40,10 +42,21 @@ object AppModule {
 
     @Provides
     @Singleton
+    fun getImagesRepo(): ImagesRepo {
+        return ImagesRepoImpl()
+    }
+    @Provides
+    @Singleton
     fun getImageViewsViewModel( prefManager: PrefManager,apiCallMethods: APICallMethods): ImageViewsViewModel {
         return ImageViewsViewModel(prefManager, apiCallMethods)
     }
-    fun getImagesListViewModel( prefManager: PrefManager): ImagesListViewModel {
-        return ImagesListViewModel(prefManager)
+    @Provides
+    @Singleton
+    fun getImagesListViewModel( prefManager: PrefManager,apiCallMethods: APICallMethods,
+                                imageRepo:ImagesRepo):
+            ImagesListViewModel {
+        return ImagesListViewModel(prefManager,apiCallMethods,imageRepo)
     }
+
+
 }

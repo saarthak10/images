@@ -5,6 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.FragmentActivity
+import com.learn.assignment.data.model.ImagesListResponse
 
 
 //Method to show toast on fragment
@@ -80,3 +81,11 @@ data class FragmentNavigationBuilder(
 
 
 class CustomException(message: String? = "Something went wrong!!!") : Exception(message)
+
+interface OnItemClickListener {
+    fun onItemClick(position: Int,itemDetail: ImagesListResponse.Hit)
+}
+
+fun Int.isAddLoading(totalCount: Int, perPage: Int = 20): Boolean {
+    return this < kotlin.math.ceil(totalCount.toDouble() / perPage)
+}

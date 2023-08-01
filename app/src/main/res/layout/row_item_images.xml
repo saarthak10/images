@@ -3,14 +3,29 @@
     xmlns:tools="http://schemas.android.com/tools">
     <data>
 
+        <variable
+            name="viewModel"
+            type="com.learn.assignment.ui.imageList.ImagesListViewModel" />
+
     </data>
 <androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
+    android:id="@+id/cl_image"
+    android:layout_marginTop="10dp"
+    android:layout_marginBottom="5dp"
     android:layout_height="100dp">
-<ImageView
-    android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:id="@+id/iv_Image"
-    android:src="@drawable/demo_image"/>
+    <androidx.cardview.widget.CardView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:elevation="1dp"
+        android:backgroundTint="#808080">
+        <ImageView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/iv_Image"
+            android:layout_gravity="center"
+            android:src="@drawable/demo_image"/>
+    </androidx.cardview.widget.CardView>
+
 </androidx.constraintlayout.widget.ConstraintLayout>
 </layout>
